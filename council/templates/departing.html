@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+
+{% block head %}
+<head>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+
+{% block data_scripts %}
+<script>
+
+
+var retired_count = Number('{{ retired }}')
+var defeated_count = Number('{{ defeated }}')
+var resigned_count = Number('{{ resigned }}')
+var died_count = Number('{{ died }}')
+var scandal_count = Number('{{ scandal }}')
+var unknown_count = Number('{{ unknown }}')
+
+console.log('retired_count: ', retired_count);
+console.log('defeated_count: ', defeated_count);
+console.log('resigned_count: ', resigned_count);
+console.log('died_count: ', died_count);
+console.log('scandal_count: ', scandal_count);
+console.log('unknown_count: ', unknown_count);
+
+
+
+var departing_data = [['Retired', retired_count], ['Defeated', defeated_count], ['Resigned', resigned_count], ['Died in office', died_count], ['Indicted/Convicted', scandal_count], ['Unknown', unknown_count]]
+
+
+$(function () {
+    $('#departing_chart-holder').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'How did Councilmembers leave office?'
+        },
+        tooltip: {
+            pointFormat: '<b>{point.y}</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                size: '75%',
+                dataLabels: {
+                    distance: 10,
+                    enabled: true,
+                    //color: '#000000',
+                    //connectorColor: '{point.color}',
+                    format: '<b>{point.name}</b>:<br> {point.percentage:.0f} %'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Reason',
+            data: departing_data
+        }]
+    });
+});
+
+</script>
+
+
+{% endblock %}
+
+<style>
+
+a:link {text-decoration:none;}
+
+a:hover {text-decoration:underline;}
+
+body {font-family:Arial, Helvetica, sans-serif;  background-color: #E9E581; line-height: 150%;}
+
+#full-page {width:75%;  margin-right: auto; margin-left: auto; margin-top: 20px;}
+
+ul {list-style-type: none; padding: 10px 0px 10px 0px; margin:0px;}
+
+li.navbar_option {display: inline; padding: 5px 20px 5px 20px; margin-right: 10px; background-color: #DE1B1B; border-radius: 5px}
+
+#header {padding: 10px; background-color: #DE1B1B; border-radius: 15px;}
+
+#navbar {}
+
+#page-results {padding: 10px; background-color: #F6F6F6; border-radius: 15px;}
+
+.questions {font-style: italic; padding-top: 3px;}
+
+</style>
+
+
+
+</head>
+
+{% endblock %}
+
+
+	{% block content %}	
+
+	<div id = 'departing_chart-holder'></div>
+
+	{% endblock %}

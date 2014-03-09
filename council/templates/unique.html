@@ -1,0 +1,160 @@
+
+{% extends "base.html" %}
+
+
+<head>
+    {% block title %}
+    <title>
+        Unique Councilmembers per District
+    </title>
+    {% endblock %}
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+
+{% block data_scripts %}
+
+
+<script>
+var district1 = {{ district1 }};
+var district2 = {{ district2 }};
+var district3 = {{ district3 }};
+var district4 = {{ district4 }};
+var district5 = {{ district5 }};
+var district6 = {{ district6 }};
+var district7 = {{ district7 }};
+var district8 = {{ district8 }};
+var district9 = {{ district9 }};
+var district10 = {{ district10 }};
+
+
+
+
+console.log('DISTRICT 1: ', district1, typeof(district1));
+console.log('DISTRICT 2: ', district2, typeof(district2));
+console.log('DISTRICT 3: ', district3, typeof(district3));
+console.log('DISTRICT 4: ', district4, typeof(district4));
+console.log('DISTRICT 5: ', district5, typeof(district5));
+console.log('DISTRICT 6: ', district6, typeof(district6));
+console.log('DISTRICT 7: ', district7, typeof(district7));
+console.log('DISTRICT 8: ', district8, typeof(district8));
+console.log('DISTRICT 9: ', district9, typeof(district9));
+console.log('DISTRICT 10: ', district10, typeof(district10));
+
+var turnover_data = [
+['DISTRICT 1', district1],
+['DISTRICT 2', district2],
+['DISTRICT 3', district3],
+['DISTRICT 4', district4],
+['DISTRICT 5', district5],
+['DISTRICT 6', district6],
+['DISTRICT 7', district7],
+['DISTRICT 8', district8],
+['DISTRICT 9', district9],
+['DISTRICT 10', district10]];
+
+console.log(turnover_data);
+
+$(function () {
+    $('#bar-chart-holder').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'City Council Turnover by District'
+        },
+        tooltip: {
+            //pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            bar: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                    connectorColor: '#000000'//,
+                    //format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                }
+            }
+        },
+
+
+        yAxis: {
+            title: {
+                text: 'Unique Councilmembers'
+            },
+            allowDecimals: false
+        },
+
+
+        xAxis: {
+            categories: [
+            'District 1',
+            'District 2',
+            'District 3',
+            'District 4',
+            'District 5',
+            'District 6',
+            'District 7',
+            'District 8',
+            'District 9',
+            'District 10'
+            ]
+        },
+
+
+
+        
+        series: [{
+            type: 'column',
+            name: 'Unique Councilmembers',
+            data: turnover_data
+        }]
+    });
+});
+
+
+</script>
+
+{% endblock %}
+
+
+
+</head>
+
+
+
+
+
+
+<body>
+
+{% block content %}
+
+<div id = 'district_text' style = 'display: none; font-family: Arial, Helvetica, sans-serif;'>
+   
+<p>DISTRICT 1: {{ district1 }} </p>
+<p>DISTRICT 2: {{ district2 }} </p>
+<p>DISTRICT 3: {{ district3 }} </p>
+<p>DISTRICT 4: {{ district4 }} </p>
+<p>DISTRICT 5: {{ district5 }} </p>
+<p>DISTRICT 6: {{ district6 }} </p>
+<p>DISTRICT 7: {{ district7 }} </p>
+<p>DISTRICT 8: {{ district8 }} </p>
+<p>DISTRICT 9: {{ district9 }} </p>
+<p>DISTRICT 10: {{ district10 }} </p>
+</div>
+
+<div id = 'bar-chart-holder' style = 'border:solid; width: 700px'>
+    this is where the chart will go
+</div>
+
+{% endblock %}
+
+</body>
+

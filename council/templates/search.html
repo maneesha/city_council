@@ -1,0 +1,279 @@
+{% extends "base.html" %}
+
+{% block head %}
+<head>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+
+{% block data_scripts %}
+<script>
+var mCount = Number('{{ male }}');
+var fCount = Number('{{ female }}');
+console.log('male count: ', mCount, typeof(mCount));
+console.log('female count: ', fCount, typeof(fCount));
+var gender_data = [['Male', mCount], ['Female', fCount]];
+var year = {{ query }};
+if (year == 0) {console.log('please select a year');}
+
+else
+{
+
+$(function () {
+    $('#gender_chart-holder').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'City Council By Gender'
+        },
+        tooltip: {
+            pointFormat: '<b>{point.y}</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                size: '75%',
+                dataLabels: {
+                    distance: 10,
+                    enabled: true,
+                    //color: '#000000',
+                    //connectorColor: '{point.color}',
+                    format: '<b>{point.name}</b>:<br> {point.percentage:.0f} %'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Gender',
+            data: gender_data
+        }]
+    });
+});
+}
+</script>
+
+
+
+<script>
+var wCount = Number('{{ white }}');
+var bCount = Number('{{ black }}');
+var aCount = Number('{{ asian }}');
+var hCount = Number('{{ hispanic }}');
+var uCount = Number('{{ race_unknown }}');
+var year = {{ query }};
+console.log('white count: ', wCount, typeof(wCount));
+console.log('black count: ', bCount, typeof(bCount));
+console.log('hispanic count', hCount, typeof(hCount));
+console.log('asian count', aCount, typeof(aCount));
+console.log('unknown count', uCount, typeof(uCount));
+console.log("Year is ", year);
+var race_data = [['White', wCount], ['Black', bCount], ['Asian', aCount], ['Hispanic',hCount], ['unknown', uCount]];
+
+if (year == 0) {console.log('please select a year');}
+
+else
+{
+
+
+$(function () {
+    $('#race_chart-holder').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'City Council By Race'
+        },
+        tooltip: {
+            pointFormat: '<b>{point.y}</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                size: '75%',
+                dataLabels: {
+                    distance: 10,
+                    enabled: true,
+                    connectorWidth: 1.5,
+                    //color: '#000000',
+                    //connectorColor: '#000000',
+                    format: '<b>{point.name}</b>:<br> {point.percentage:.0f} %'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Race',
+            data: race_data
+        }]
+    });
+});
+
+}
+
+</script>
+
+
+<script>
+var demCount = Number('{{ democrat }}');
+var repCount = Number('{{ republican }}');
+var unknownPCount = Number('{{ party_unknown }}');
+var year = {{ query }};
+console.log('democrat count: ', demCount, typeof(demCount));
+console.log('republican count: ', repCount, typeof(repCount));
+console.log('party unknown count', unknownPCount, typeof(unknownPCount));
+
+console.log("Year is ", year);
+var party_data = [['Democrat', demCount], ['Republican', repCount], ['unknown', unknownPCount]];
+
+if (year == 0) {console.log('please select a year');}
+
+else
+{
+
+$(function () {
+    $('#party_chart-holder').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'City Council By Party'
+        },
+        tooltip: {
+            pointFormat: '<b>{point.y}</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                size: '75%',
+                dataLabels: {
+                    distance: 10,
+                    enabled: true,
+                    connectorWidth: 1.5,
+                    //color: '#000000',
+                    //connectorColor: '#000000',
+                    format: '<b>{point.name}</b>:<br> {point.percentage:.0f}%'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Party',
+            data: party_data
+        }]
+    });
+});
+}
+</script>
+
+{% endblock %}
+
+
+
+<style>
+
+a:link {text-decoration:none;}
+
+a:hover {text-decoration:underline;}
+
+body {font-family:Arial, Helvetica, sans-serif;  background-color: #E9E581; line-height: 150%;}
+
+#full-page {width:75%;  margin-right: auto; margin-left: auto; margin-top: 20px;}
+
+ul {list-style-type: none; padding: 10px 0px 10px 0px; margin:0px;}
+
+li.navbar_option {display: inline; padding: 5px 20px 5px 20px; margin-right: 10px; background-color: #DE1B1B; border-radius: 5px}
+
+#header {padding: 10px; background-color: #DE1B1B; border-radius: 15px;}
+
+#navbar {}
+
+#page-results {padding: 10px; background-color: #F6F6F6; border-radius: 15px;}
+
+.questions {font-style: italic; padding-top: 3px;}
+
+</style>
+
+
+
+</head>
+
+{% endblock %}
+
+{% block content %}
+<p>Search by Year</p>
+
+<div id = "search-form" style = 'width:200px;'>
+<form id = "search-form_box" method = "get" action = ".">
+
+    {{ form.as_p }} 
+
+    <input type = "submit" value = "search" />
+
+</form>
+</div> <!-- end search form div -->
+
+
+<div id = "search-results" style = 'width: 500px;'>
+
+    {% if show_results %}
+        <ul><li  style = "list-style-type: none;">YEAR: {{ query }}</li></ul>
+
+    <ul>
+    <li style = 'display:inline'>Male: {{ male }}</li>
+    <li style = 'display:inline'>Female: {{ female }}</li>
+    </ul>
+
+    <ul>
+    <li style = 'display:inline'>White: {{ white }}</li>
+    <li style = 'display:inline'>Black: {{ black }}</li>
+    <li style = 'display:inline'>Asian: {{ asian }}</li>
+    <li style = 'display:inline'>Hispanic: {{ hispanic }}</li>
+    <li style = 'display:inline'>Unknown: {{ race_unknown }}</li>
+    </ul>
+
+    <ul>
+    <li style = 'display:inline'>Democrat: {{ democrat }}</li>
+    <li style = 'display:inline'>Republican: {{ republican }}</li>
+    <li style = 'display:inline'>Unknown: {{ party_unknown }}</li>
+    </ul>
+    {% endif %}
+
+</div> <!-- end  search results div -->
+
+<div id = 'container'>
+
+<div id = 'gender_chart-holder' style = 'border:solid; width: 30%; float: left; margin-right: 15px'>
+
+</div>  <!-- end chart hold div -->
+
+<!-- <div id = "race-search-results" style = 'background-color:#66CC66; width: 500px;'>
+
+    {% if show_results %}
+
+    {% endif %}
+
+</div> --> <!-- end race search results div -->
+ 
+
+<div id = 'race_chart-holder' style = 'border: solid; width: 30%; float:left; margin-right:15px'>
+</div>  <!-- end chart hold div -->
+
+<div id = 'party_chart-holder' style = 'border: solid; width: 30%; float:left;'>
+</div>  <!-- end chart hold div -->
+
+</div> <!-- end container div -->
+
+{% endblock %}
+
+
+</body>

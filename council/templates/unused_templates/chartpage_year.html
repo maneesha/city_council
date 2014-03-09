@@ -1,0 +1,111 @@
+<html>
+<head>
+
+<!-- styles -->
+
+ <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"> 
+
+<!-- end styles -->
+
+<!-- scripts -->
+
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+  
+
+<!-- end scripts -->
+
+</head>
+
+
+
+<body>
+<!-- slider --> 
+Select a year:
+<div id = "slider" style = "width:300px;"></div>
+
+<!-- text to show selected value -->
+<label for="year">You have chosen:</label>
+<input type="text" id="year" style="border:0; color:#f6931f; font-weight:bold;">
+
+
+<script>
+
+//This is the original function
+//   $(function() {
+//     $( "#slider" ).slider({
+//       //value: 2014,
+//       value: '{{ slider.value }}',
+//       //value: $('#id_field_name').value(),
+//       min:1952, 
+//       max:2014,
+//       step: 1,
+//       //function to get selected value & share it with #year and #container for chart
+//       slide: function(event, ui){
+//         $("#year").val(ui.value);
+//         s2 = ui.value;
+//         console.log('s2 is: ', s2);
+//         console.log("male is {{ male }}");
+//         console.log("female is {{ female }}");
+//        } //closes slide function   
+
+
+//     });  //closes .slider
+//  $("#year").val($("#slider").slider("value"));
+// //return false;
+//   }); //closes function
+
+//This is the  function trying a live slider
+  $(document).ready(function() {
+    $( "#slider" ).slider({
+      //value: 2014,
+      value: '{{ slider.value }}',
+      //value: $('#id_field_name').value(),
+      min:1952, 
+      max:2014,
+      step: 1,
+      //function to get selected value & share it with #year and #container for chart
+      slide: function(event, ui){
+        $("#year").val(ui.value);
+        s2 = ui.value;
+        console.log('s2 is: ', s2);
+        console.log("male is {{ male }}");
+        console.log("female is {{ female }}");
+       }, //closes slide function 
+       change: function(event, ui) {
+         $('#year').submit();
+       } //closes change function
+
+    });  //closes .slider
+ $("#year").val($("#slider").slider("value"));
+//return false;
+  }); //closes function
+
+
+  </script>
+
+
+
+
+
+
+
+This is the gender breakdown.
+
+Male:  {{ male }}
+
+Female: {{ female }}
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto; border: dotted;"></div>
+
+
+</body>
+
+
+
+
+</html>
+
+
+

@@ -1,0 +1,12 @@
+
+
+city_council/settings.py
+
+
+**/*.pyc
+**/*.py~
+**/*.html~
+
+venv
+*.pyc
+staticfiles
